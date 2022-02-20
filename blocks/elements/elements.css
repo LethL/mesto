@@ -1,0 +1,11 @@
+.elements {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding-top: 51px;
+    padding-bottom: 66px;
+    gap: 20px 17px;
+    justify-content: center;
+}

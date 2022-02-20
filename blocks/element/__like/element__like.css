@@ -1,0 +1,11 @@
+.element__like {
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
+    cursor: pointer;
+    transition: opacity .1s linear;
+}
+
+.element__like:hover {
+    opacity: .5;
+}
