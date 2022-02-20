@@ -6,3 +6,12 @@
     margin-left: 30px;
     padding-top: 12px;
 }
+
+@media (max-width: 550px) {
+    .profile__info {
+        justify-content: center;
+        padding-top: 29px;
+        margin-left: 0;
+        max-width: 100%;
+    }
+}
