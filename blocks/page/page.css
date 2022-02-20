@@ -1,0 +1,9 @@
+.page {
+    margin: 0 auto;
+    background-color:#000000;
+    font-family: 'Inter', sans-serif;
+    color: #FFFFFF;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 45px 200px 60px;
+}
