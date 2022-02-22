@@ -8,10 +8,10 @@
     width: 24px;
     height: 24px;
     align-self: center;
-    margin-top: 6px;
     outline: none;
     cursor: pointer;
     transition: opacity .1s linear;
+    margin-top: 6px;
     margin-left: 18px;
 }
 
