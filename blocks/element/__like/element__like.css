@@ -1,7 +1,10 @@
 .element__like {
-    position: absolute;
-    bottom: 30px;
-    right: 20px;
+    background: none;
+    border: 0;
+    background-image: url(../../../images/like.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 22px;
     cursor: pointer;
     transition: opacity .1s linear;
 }

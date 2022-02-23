@@ -6,12 +6,14 @@ let profileSubtitle = document.querySelector('.profile__subtitle');
 let profileTitleInput = document.querySelector('#title');
 let profileSubtitleInput = document.querySelector('#subtitle');
 let form = document.querySelector('.popup__form');
+let likeBtns = document.querySelectorAll('.element__like');
 
 function closeForm() {
     popup.classList.remove('popup_opened');
 }
 
 function openForm() {
+    editInputValue();
     popup.classList.add('popup_opened');
 }
 
@@ -36,3 +38,9 @@ form.addEventListener('submit', e => {
     editProfileText();
     closeForm();
 })
+
+likeBtns.forEach(e => {
+    e.addEventListener('click', () => {
+        e.classList.toggle('like_active')
+    })
+});

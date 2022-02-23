@@ -16,12 +16,12 @@
     <main class="content">
         <div class="popup">
             <div class="popup__container">
-                <button class="popup__close-btn"><img class="popup__close-image" src="images/close.svg" alt="закрыть"></button>
-                <form class="popup__form" action="send">
-                    <p class="popup__form-title">Редактировать профиль</p>
+                <button type="button" class="popup__close-btn"><img class="popup__close-image" src="images/close.svg" alt="закрыть"></button>
+                <form name="edit-profile" class="popup__form" action="send">
+                    <h2 class="popup__form-title">Редактировать профиль</h2>
                     <input id="title" class="popup__form-input" type="text">
                     <input id="subtitle" class="popup__form-input" type="text">
-                    <button class="popup__form-btn">Сохранить</button>
+                    <button type="submit" class="popup__form-btn">Сохранить</button>
                 </form>
             </div>
         </div>
@@ -29,41 +29,53 @@
             <img class="profile__avatar" src="images/image.jpg" alt="аватар">
             <div class="profile__info">
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
-                <button class="profile__edit-button"><img src="images/Vector.svg" alt="изменить"></button>
+                <button type="button" class="profile__edit-button"></button>
                 <p class="profile__subtitle">Исследователь океана</p>
             </div>
-            <button class="profile__add-button"><img src="images/add.svg" alt="добавить"></button>
+            <button type="button" class="profile__add-button"></button>
         </section>
         <ul class="elements">
             <li class="element">
                 <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="изображение">
-                <h2 class="element__title">Карачаевск</h2>
-                <img class="element__like" src="images/like.svg" alt="лайк">
+                <div class="element__info">
+                    <h2 class="element__title">Карачаевск</h2>
+                    <button class="element__like" type="button"></button>
+                </div>
             </li>
             <li class="element">
                 <img class="element__image" src="images/elbrus.jpg" alt="изображение">
-                <h2 class="element__title">Гора Эльбрус</h2>
-                <img class="element__like" src="images/like.svg" alt="лайк">
+                <div class="element__info">
+                    <h2 class="element__title">Гора Эльбрус</h2>
+                    <button class="element__like" type="button"></button>
+                </div>
             </li>
             <li class="element">
                 <img class="element__image" src="images/dombai.jpg" alt="изображение">
-                <h2 class="element__title">Домбай</h2>
-                <img class="element__like" src="images/like.svg" alt="лайк">
+                <div class="element__info">
+                    <h2 class="element__title">Домбай</h2>
+                    <button class="element__like" type="button"></button>
+                </div>
             </li>
             <li class="element">
                 <img class="element__image" src="images/elbrus.jpg" alt="изображение">
-                <h2 class="element__title">Гора Эльбрус</h2>
-                <img class="element__like" src="images/like.svg" alt="лайк">
+                <div class="element__info">
+                    <h2 class="element__title">Гора Эльбрус</h2>
+                    <button class="element__like" type="button"></button>
+                </div>
             </li>
             <li class="element">
                 <img class="element__image" src="images/dombai.jpg" alt="изображение">
-                <h2 class="element__title">Домбай</h2>
-                <img class="element__like" src="images/like.svg" alt="лайк">
+                <div class="element__info">
+                    <h2 class="element__title">Домбай</h2>
+                    <button class="element__like" type="button"></button>
+                </div>
             </li>
             <li class="element">
                 <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="изображение">
-                <h2 class="element__title">Карачаево-Чeркессия</h2>
-                <img class="element__like" src="images/like.svg" alt="лайк">
+                <div class="element__info">
+                    <h2 class="element__title">Карачаево-Чeркессия</h2>
+                    <button class="element__like" type="button"></button>
+                </div>
             </li>
         </ul>
     </main>
