@@ -35,48 +35,15 @@
             <button type="button" class="profile__add-button"></button>
         </section>
         <ul class="elements">
-            <li class="element">
-                <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="изображение">
-                <div class="element__info">
-                    <h2 class="element__title">Карачаевск</h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </li>
-            <li class="element">
-                <img class="element__image" src="images/elbrus.jpg" alt="изображение">
-                <div class="element__info">
-                    <h2 class="element__title">Гора Эльбрус</h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </li>
-            <li class="element">
-                <img class="element__image" src="images/dombai.jpg" alt="изображение">
-                <div class="element__info">
-                    <h2 class="element__title">Домбай</h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </li>
-            <li class="element">
-                <img class="element__image" src="images/elbrus.jpg" alt="изображение">
-                <div class="element__info">
-                    <h2 class="element__title">Гора Эльбрус</h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </li>
-            <li class="element">
-                <img class="element__image" src="images/dombai.jpg" alt="изображение">
-                <div class="element__info">
-                    <h2 class="element__title">Домбай</h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </li>
-            <li class="element">
-                <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="изображение">
-                <div class="element__info">
-                    <h2 class="element__title">Карачаево-Чeркессия</h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </li>
+            <template id="template">
+                <li class="element">
+                    <img class="element__image" alt="изображение">
+                    <div class="element__info">
+                        <h2 class="element__title"></h2>
+                        <button class="element__like" type="button"></button>
+                    </div>
+                </li>
+            </template>
         </ul>
     </main>
     <footer class="footer">
