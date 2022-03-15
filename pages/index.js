@@ -8,7 +8,6 @@ let profileTitleInput = document.querySelector('#title');
 let profileSubtitleInput = document.querySelector('#subtitle');
 let addProfileForm = document.querySelector('#edit-profile-form');
 let addPlaceForm = document.querySelector('#add-place-form');
-let likeBtns = document.querySelectorAll('.element__like');
 const placeNameInput = document.querySelector('#name-input');
 const placeImageInput = document.querySelector('#image-input');
 const cardsList = document.querySelector('.elements');
@@ -84,17 +83,12 @@ function renderCards(link, name) {
     const card = cardTemplate.querySelector('.element').cloneNode(true);
     card.querySelector('.element__image').src = link;
     card.querySelector('.element__info').querySelector('.element__title').textContent = name;
+    cardButtonsListenners(card);
     cardsList.prepend(card);
 }
 
 initialCards.map(card => {
     renderCards(card.link, card.name)
-})
-
-likeBtns.forEach(e => {
-    e.addEventListener('click', () => {
-        e.classList.toggle('like_active')
-    })
 })
 
 addPlaceForm.addEventListener('submit', addPlace)
@@ -107,4 +101,21 @@ function addPlace(event) {
   placeImageInput.value = ''
   placeNameInput.value = ''
   closeForm()
+}
+
+document.querySelectorAll('.element').forEach(e => {
+  e.addEventListener('click', elem => {
+    if (elem.target.classList.contains('element__like')) {
+      elem.target.classList.toggle('like_active')
+    }
+  })
+})
+
+function deleteCard(event) {
+  const card = event.currentTarget.closest('.element')
+  card.remove()
+}
+
+function cardButtonsListenners(card) {
+  card.querySelector('.element__delete').addEventListener('click', deleteCard)
 }
