@@ -11,6 +11,7 @@ let addPlaceForm = document.querySelector('#add-place-form');
 const placeNameInput = document.querySelector('#name-input');
 const placeImageInput = document.querySelector('#image-input');
 const cardsList = document.querySelector('.elements');
+const popupCardContent = document.querySelector('.popup__card-content');
 const initialCards = [
     {
       name: 'Архыз',
@@ -46,11 +47,13 @@ function openForm() {
     editInputValue();
     popup.classList.add('popup_opened');
     addPlaceForm.classList.add('popup__form_disabled');
+    popupCardContent.classList.add('popup__card-content_disabled');
     addProfileForm.classList.remove('popup__form_disabled');
 }
 
 function openAddPlaceForm() {
   popup.classList.add('popup_opened');
+  popupCardContent.classList.add('popup__card-content_disabled');
   addProfileForm.classList.add('popup__form_disabled');
   addPlaceForm.classList.remove('popup__form_disabled');
 }
@@ -118,4 +121,17 @@ function deleteCard(event) {
 
 function cardButtonsListenners(card) {
   card.querySelector('.element__delete').addEventListener('click', deleteCard)
+  card.addEventListener('click', (e) => {
+    if (e.target.classList.contains('element__image')) {
+      openForm()
+      popupCardContent.classList.remove('popup__card-content_disabled');
+      document.querySelectorAll('form').forEach(e => {
+        e.classList.add('popup__form_disabled')
+      })
+      const cardImg = document.querySelector('.popup__card-img')
+      const cardName = document.querySelector('.popup__card-name')
+      cardImg.src = e.target.src
+      cardName.textContent = card.querySelector('.element__info').querySelector('.element__title').textContent
+    }
+  })
 }
