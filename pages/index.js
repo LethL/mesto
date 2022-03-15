@@ -1,13 +1,13 @@
-let editProfileBtn = document.querySelector('.profile__edit-button');
-let addPlaceBtn = document.querySelector('.profile__add-button');
-let popupCloseBtn = document.querySelector('.popup__close-btn');
-let popup = document.querySelector('.popup');
-let profileTitle = document.querySelector('.profile__title');
-let profileSubtitle = document.querySelector('.profile__subtitle');
-let profileTitleInput = document.querySelector('#title');
-let profileSubtitleInput = document.querySelector('#subtitle');
-let addProfileForm = document.querySelector('#edit-profile-form');
-let addPlaceForm = document.querySelector('#add-place-form');
+const editProfileBtn = document.querySelector('.profile__edit-button');
+const addPlaceBtn = document.querySelector('.profile__add-button');
+const popupCloseBtn = document.querySelector('.popup__close-btn');
+const popup = document.querySelector('.popup');
+const profileTitle = document.querySelector('.profile__title');
+const profileSubtitle = document.querySelector('.profile__subtitle');
+const profileTitleInput = document.querySelector('#title');
+const profileSubtitleInput = document.querySelector('#subtitle');
+const addProfileForm = document.querySelector('#edit-profile-form');
+const addPlaceForm = document.querySelector('#add-place-form');
 const placeNameInput = document.querySelector('#name-input');
 const placeImageInput = document.querySelector('#image-input');
 const cardsList = document.querySelector('.elements');
@@ -135,3 +135,15 @@ function cardButtonsListenners(card) {
     }
   })
 }
+
+document.addEventListener('animationstart', function (e) {
+  if (e.animationName === 'fade-in') {
+      e.target.classList.add('popup-fade-in');
+  }
+});
+
+document.addEventListener('animationend', function (e) {
+  if (e.animationName === 'fade-out') {
+      e.target.classList.remove('popup-fade-in');
+   }
+});
