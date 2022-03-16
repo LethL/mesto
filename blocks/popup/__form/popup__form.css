@@ -1,5 +1,5 @@
 .popup__form {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-between;
     padding: 34px 36px 37px;

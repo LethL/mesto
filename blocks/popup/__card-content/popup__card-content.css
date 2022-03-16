@@ -1,5 +1,5 @@
 .popup__card-content {
-    display: flex;
+    display: none;
     flex-direction: column;
     max-width: 75vw;
     max-height: 75vh;
