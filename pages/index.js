@@ -1,7 +1,11 @@
 const editProfileBtn = document.querySelector('.profile__edit-button');
 const addPlaceBtn = document.querySelector('.profile__add-button');
-const popupCloseBtn = document.querySelector('.popup__close-btn');
-const popup = document.querySelector('.popup');
+const popupTypeProfile = document.querySelector('.popup_type_profile');
+const popupAddCard = document.querySelector('.popup_add_card');
+const popupViewImage = document.querySelector('.popup_view_image');
+const closeTypeProfile = document.querySelector('.close_type_profile');
+const closeAddCard = document.querySelector('.close_add_card');
+const closeViewImage = document.querySelector('.close_view_image');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const profileTitleInput = document.querySelector('#title');
@@ -41,11 +45,8 @@ const initialCards = [
     }
   ];
 
-function closePopup() {
+function closePopup(popup) {
     popup.classList.remove('popup_opened');
-    addProfileForm.classList.remove('popup__form_active');
-    addPlaceForm.classList.remove('popup__form_active');
-    popupCardContent.classList.remove('popup__card-content_active');
 }
 
 function openPopup(popup) {
@@ -54,19 +55,27 @@ function openPopup(popup) {
 
 function openEditProfilePopup() {
     editInputValue();
-    openPopup(popup);
-    addProfileForm.classList.add('popup__form_active');
+    openPopup(popupTypeProfile);
 }
 
 function openAddPlacePopup() {
-  openPopup(popup);
-  addPlaceForm.classList.add('popup__form_active');
+  openPopup(popupAddCard);
 }
 
 editProfileBtn.addEventListener('click', openEditProfilePopup)
 addPlaceBtn.addEventListener('click', openAddPlacePopup)
 
-popupCloseBtn.addEventListener('click', closePopup)
+closeTypeProfile.addEventListener('click', () => {
+  closePopup(popupTypeProfile)
+})
+
+closeAddCard.addEventListener('click', () => {
+  closePopup(popupAddCard)
+})
+
+closeViewImage.addEventListener('click', () => {
+  closePopup(popupViewImage)
+})
 
 function editInputValue() {
     profileTitleInput.value = profileTitle.textContent;
@@ -89,13 +98,16 @@ function renderCards(link, name) {
     const cardTemplate = document.querySelector('#template').content;
     const card = cardTemplate.querySelector('.element').cloneNode(true);
     card.querySelector('.element__image').src = link;
+    card.querySelector('.element__image').alt = name;
     card.querySelector('.element__info').querySelector('.element__title').textContent = name;
     cardButtonsListenners(card);
-    addCard(card);
-}
-
-function addCard(card) {
-  cardsList.prepend(card);
+    cardsList.prepend(card);
+    // Здравствуйте! По поводу дополнительной функции с возвратом карточки,
+    // я не совсем понял, можете скинуть ссылки на какие-то материалы/вебинары/примеры?
+    // Просто как я это воспринимаю, в данной функции(рендер(отрисовка карты)) процесс создания карточки и впоследствии ее добавление един,
+    // так же у нас был вебинар по данной теме, где наствник точно таким же способом реализовал данную функцию.
+    // И мне не совсем понятно для чего писать дополнительную функцию с последующим ее вызовом в других функциях,
+    // когда это можно решить одной строчкой в этой функции. Спасибо за быстрое ревью)
 }
 
 initialCards.map(card => {
@@ -125,10 +137,9 @@ function cardButtonsListenners(card) {
     elem.target.classList.toggle('like_active')
   })
   card.querySelector('.element__image').addEventListener('click', e => {
-    openPopup(popup);
-    popupCardContent.classList.add('popup__card-content_active');
+    openPopup(popupViewImage);
     cardImg.src = e.target.src
-    cardImg.alt = card.querySelector('.element__info').querySelector('.element__title').textContent
+    cardImg.alt = card.querySelector('.element__info').querySelector('.element__title').textContent;
     cardName.textContent = cardImg.alt
   })
 }
