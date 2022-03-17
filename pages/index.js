@@ -3,9 +3,9 @@ const addPlaceBtn = document.querySelector('.profile__add-button');
 const popupTypeProfile = document.querySelector('.popup_type_profile');
 const popupAddCard = document.querySelector('.popup_add_card');
 const popupViewImage = document.querySelector('.popup_view_image');
-const closeTypeProfile = document.querySelector('.close_type_profile');
-const closeAddCard = document.querySelector('.close_add_card');
-const closeViewImage = document.querySelector('.close_view_image');
+const closeTypeProfile = document.querySelector('.close-btn_type_profile');
+const closeAddCard = document.querySelector('.close-btn_add_card');
+const closeViewImage = document.querySelector('.close-btn_view_image');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const profileTitleInput = document.querySelector('#title');
@@ -91,39 +91,36 @@ function editProfileText() {
 addProfileForm.addEventListener('submit', e => {
     e.preventDefault();
     editProfileText();
-    closePopup();
+    closePopup(popupTypeProfile);
 })
 
-function renderCards(link, name) {
-    const cardTemplate = document.querySelector('#template').content;
-    const card = cardTemplate.querySelector('.element').cloneNode(true);
-    card.querySelector('.element__image').src = link;
-    card.querySelector('.element__image').alt = name;
-    card.querySelector('.element__info').querySelector('.element__title').textContent = name;
-    cardButtonsListenners(card);
-    cardsList.prepend(card);
-    // Здравствуйте! По поводу дополнительной функции с возвратом карточки,
-    // я не совсем понял, можете скинуть ссылки на какие-то материалы/вебинары/примеры?
-    // Просто как я это воспринимаю, в данной функции(рендер(отрисовка карты)) процесс создания карточки и впоследствии ее добавление един,
-    // так же у нас был вебинар по данной теме, где наствник точно таким же способом реализовал данную функцию.
-    // И мне не совсем понятно для чего писать дополнительную функцию с последующим ее вызовом в других функциях,
-    // когда это можно решить одной строчкой в этой функции. Спасибо за быстрое ревью)
+function createCard(card) {
+  const cardTemplate = document.querySelector('#template').content;
+  const newCard = cardTemplate.querySelector('.element').cloneNode(true);
+  newCard.querySelector('.element__image').src = card.link;
+  newCard.querySelector('.element__image').alt = card.name;
+  newCard.querySelector('.element__info').querySelector('.element__title').textContent = card.name;
+  cardButtonsListenners(newCard);
+  return newCard
 }
 
-initialCards.map(card => {
-    renderCards(card.link, card.name)
-})
+function renderCards() {
+  const cards = initialCards.map(createCard);
+  cardsList.append(...cards);
+}
+renderCards()
+ 
+addPlaceForm.addEventListener('submit', addCard)
 
-addPlaceForm.addEventListener('submit', addPlace)
-
-function addPlace(event) {
+function addCard(event) {
   event.preventDefault()
   const link = placeImageInput.value
   const name = placeNameInput.value
-  renderCards(link, name)
+  const newCards = createCard(name, link);
+  cardsList.prepend(newCards);
   placeImageInput.value = ''
   placeNameInput.value = ''
-  closePopup()
+  closePopup(popupAddCard)
 }
 
 function deleteCard(event) {
