@@ -116,8 +116,8 @@ function addCard(event) {
   event.preventDefault()
   const link = placeImageInput.value
   const name = placeNameInput.value
-  const newCards = createCard(name, link);
-  cardsList.prepend(newCards);
+  const newCard = createCard({name, link});
+  cardsList.prepend(newCard);
   placeImageInput.value = ''
   placeNameInput.value = ''
   closePopup(popupAddCard)
