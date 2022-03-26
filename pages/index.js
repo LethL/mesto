@@ -46,20 +46,44 @@ const initialCards = [
   ];
 
 function closePopup(popup) {
-    popup.classList.remove('popup_opened');
+    popup.classList.remove('popup_opened')
+}
+
+function closePopupOnOverlay(popup) {
+  popup.addEventListener('click', evt => {
+    if (evt.target.classList.contains('popup_opened')) {
+      evt.target.classList.remove('popup_opened')
+    }
+  })
+}
+
+function closeModalWindow(popup) {
+  document.removeEventListener('keydown', handleEscUp)
+  popup.classList.remove('popup_opened')
+}
+
+function handleEscUp(evt) {
+  evt.preventDefault()
+  const activePopup = document.querySelector('.popup_opened')
+  if (evt.keyCode === 27) {
+    closeModalWindow(activePopup)
+  }
 }
 
 function openPopup(popup) {
-  popup.classList.add('popup_opened');
-} 
+  document.addEventListener('keydown', handleEscUp)
+  popup.classList.add('popup_opened')
+}
 
 function openEditProfilePopup() {
-    editInputValue();
-    openPopup(popupTypeProfile);
+    editInputValue()
+    openPopup(popupTypeProfile)
+    closePopupOnOverlay(popupTypeProfile)
 }
 
 function openAddPlacePopup() {
-  openPopup(popupAddCard);
+  openPopup(popupAddCard)
+  closePopupOnOverlay(popupAddCard)
 }
 
 editProfileBtn.addEventListener('click', openEditProfilePopup)
@@ -135,6 +159,7 @@ function cardButtonsListenners(card) {
   })
   card.querySelector('.element__image').addEventListener('click', e => {
     openPopup(popupViewImage);
+    closePopupOnOverlay(popupViewImage)
     cardImg.src = e.target.src
     cardImg.alt = card.querySelector('.element__info').querySelector('.element__title').textContent;
     cardName.textContent = cardImg.alt
