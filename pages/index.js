@@ -63,7 +63,6 @@ function closeModalWindow(popup) {
 }
 
 function handleEscUp(evt) {
-  evt.preventDefault()
   const activePopup = document.querySelector('.popup_opened')
   if (evt.keyCode === 27) {
     closeModalWindow(activePopup)
@@ -76,7 +75,6 @@ function openPopup(popup) {
 }
 
 function openEditProfilePopup() {
-    editInputValue()
     openPopup(popupTypeProfile)
     closePopupOnOverlay(popupTypeProfile)
 }
@@ -105,6 +103,7 @@ function editInputValue() {
     profileTitleInput.value = profileTitle.textContent;
     profileSubtitleInput.value = profileSubtitle.textContent;
 }
+editInputValue()
 
 function editProfileText() {
     profileTitle.textContent = profileTitleInput.value;
