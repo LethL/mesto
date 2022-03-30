@@ -18,6 +18,16 @@ const cardsList = document.querySelector('.elements');
 const popupCardContent = document.querySelector('.popup__card-content');
 const cardImg = document.querySelector('.popup__card-img');
 const cardName = document.querySelector('.popup__card-name');
+const inputList = Array.from(addPlaceForm.querySelectorAll('.popup__form-input'));
+const buttonElement = addPlaceForm.querySelector('.popup__form-btn');
+const config = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__form-input',
+  submitButtonSelector: '.popup__form-btn',
+  inactiveButtonClass: 'popup__form-btn_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__form-input-error_active'
+}
 const initialCards = [
     {
       name: 'Архыз',
@@ -47,6 +57,7 @@ const initialCards = [
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened')
+    document.removeEventListener('keydown', handleEscUp)
 }
 
 function closePopupOnOverlay(popup) {
@@ -57,31 +68,28 @@ function closePopupOnOverlay(popup) {
   })
 }
 
-function closeModalWindow(popup) {
-  document.removeEventListener('keydown', handleEscUp)
-  popup.classList.remove('popup_opened')
-}
-
 function handleEscUp(evt) {
   const activePopup = document.querySelector('.popup_opened')
-  if (evt.keyCode === 27) {
-    closeModalWindow(activePopup)
+  const escKey = (evt.keyCode === 27)
+  if (escKey) {
+    closePopup(activePopup)
   }
 }
 
 function openPopup(popup) {
   document.addEventListener('keydown', handleEscUp)
   popup.classList.add('popup_opened')
+  closePopupOnOverlay(popup)
 }
 
 function openEditProfilePopup() {
-    openPopup(popupTypeProfile)
-    closePopupOnOverlay(popupTypeProfile)
+  editInputValue()
+  openPopup(popupTypeProfile)
 }
 
 function openAddPlacePopup() {
   openPopup(popupAddCard)
-  closePopupOnOverlay(popupAddCard)
+  toggleButtonState(inputList, buttonElement, config)
 }
 
 editProfileBtn.addEventListener('click', openEditProfilePopup)
@@ -103,7 +111,6 @@ function editInputValue() {
     profileTitleInput.value = profileTitle.textContent;
     profileSubtitleInput.value = profileSubtitle.textContent;
 }
-editInputValue()
 
 function editProfileText() {
     profileTitle.textContent = profileTitleInput.value;
@@ -123,7 +130,7 @@ function createCard(card) {
   newCard.querySelector('.element__image').src = card.link;
   newCard.querySelector('.element__image').alt = card.name;
   newCard.querySelector('.element__info').querySelector('.element__title').textContent = card.name;
-  cardButtonsListenners(newCard);
+  addCardButtonsListenners(newCard);
   return newCard
 }
 
@@ -151,14 +158,13 @@ function deleteCard(event) {
   card.remove()
 }
 
-function cardButtonsListenners(card) {
+function addCardButtonsListenners(card) {
   card.querySelector('.element__delete').addEventListener('click', deleteCard)
   card.querySelector('.element__like').addEventListener('click', elem => {
     elem.target.classList.toggle('like_active')
   })
   card.querySelector('.element__image').addEventListener('click', e => {
     openPopup(popupViewImage);
-    closePopupOnOverlay(popupViewImage)
     cardImg.src = e.target.src
     cardImg.alt = card.querySelector('.element__info').querySelector('.element__title').textContent;
     cardName.textContent = cardImg.alt
