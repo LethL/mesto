@@ -55,11 +55,4 @@ function enableValidation(config) {
     });
 };
    
-enableValidation({
-    formSelector: '.popup__form',
-    inputSelector: '.popup__form-input',
-    submitButtonSelector: '.popup__form-btn',
-    inactiveButtonClass: 'popup__form-btn_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__form-input-error_active'
-});
+enableValidation(config);

@@ -20,6 +20,8 @@ const cardImg = document.querySelector('.popup__card-img');
 const cardName = document.querySelector('.popup__card-name');
 const inputList = Array.from(addPlaceForm.querySelectorAll('.popup__form-input'));
 const buttonElement = addPlaceForm.querySelector('.popup__form-btn');
+const escKey = 27;
+const cardTemplate = document.querySelector('#template').content;
 const config = {
   formSelector: '.popup__form',
   inputSelector: '.popup__form-input',
@@ -63,15 +65,14 @@ function closePopup(popup) {
 function closePopupOnOverlay(popup) {
   popup.addEventListener('click', evt => {
     if (evt.target.classList.contains('popup_opened')) {
-      evt.target.classList.remove('popup_opened')
+      closePopup(popup)
     }
   })
 }
 
 function handleEscUp(evt) {
   const activePopup = document.querySelector('.popup_opened')
-  const escKey = (evt.keyCode === 27)
-  if (escKey) {
+  if (evt.keyCode === escKey) {
     closePopup(activePopup)
   }
 }
@@ -82,8 +83,23 @@ function openPopup(popup) {
   closePopupOnOverlay(popup)
 }
 
+function editInputValue() {
+  profileTitleInput.value = profileTitle.textContent;
+  profileSubtitleInput.value = profileSubtitle.textContent;
+}
+
+function clearProfileInputErrors() {
+  const profileErorrs =  addProfileForm.querySelectorAll('.popup__form-input-error')
+  const profileBtn = addProfileForm.querySelector(config.submitButtonSelector)
+
+  profileErorrs.forEach(e => e.classList.remove(config.errorClass))
+  profileBtn.classList.remove(config.inactiveButtonClass)
+  profileBtn.removeAttribute('disabled')
+}
+
 function openEditProfilePopup() {
   editInputValue()
+  clearProfileInputErrors()
   openPopup(popupTypeProfile)
 }
 
@@ -91,9 +107,6 @@ function openAddPlacePopup() {
   openPopup(popupAddCard)
   toggleButtonState(inputList, buttonElement, config)
 }
-
-editProfileBtn.addEventListener('click', openEditProfilePopup)
-addPlaceBtn.addEventListener('click', openAddPlacePopup)
 
 closeTypeProfile.addEventListener('click', () => {
   closePopup(popupTypeProfile)
@@ -107,25 +120,12 @@ closeViewImage.addEventListener('click', () => {
   closePopup(popupViewImage)
 })
 
-function editInputValue() {
-    profileTitleInput.value = profileTitle.textContent;
-    profileSubtitleInput.value = profileSubtitle.textContent;
-}
-
 function editProfileText() {
-    profileTitle.textContent = profileTitleInput.value;
-    profileSubtitle.textContent = profileSubtitleInput.value;
+  profileTitle.textContent = profileTitleInput.value;
+  profileSubtitle.textContent = profileSubtitleInput.value;
 }
-
-
-addProfileForm.addEventListener('submit', e => {
-    e.preventDefault();
-    editProfileText();
-    closePopup(popupTypeProfile);
-})
 
 function createCard(card) {
-  const cardTemplate = document.querySelector('#template').content;
   const newCard = cardTemplate.querySelector('.element').cloneNode(true);
   newCard.querySelector('.element__image').src = card.link;
   newCard.querySelector('.element__image').alt = card.name;
@@ -139,8 +139,6 @@ function renderCards() {
   cardsList.append(...cards);
 }
 renderCards()
- 
-addPlaceForm.addEventListener('submit', addCard)
 
 function addCard(event) {
   event.preventDefault()
@@ -148,9 +146,9 @@ function addCard(event) {
   const name = placeNameInput.value
   const newCard = createCard({name, link});
   cardsList.prepend(newCard);
+  closePopup(popupAddCard)
   placeImageInput.value = ''
   placeNameInput.value = ''
-  closePopup(popupAddCard)
 }
 
 function deleteCard(event) {
@@ -170,6 +168,18 @@ function addCardButtonsListenners(card) {
     cardName.textContent = cardImg.alt
   })
 }
+
+editProfileBtn.addEventListener('click', openEditProfilePopup)
+
+addPlaceBtn.addEventListener('click', openAddPlacePopup)
+
+addProfileForm.addEventListener('submit', e => {
+    e.preventDefault();
+    editProfileText();
+    closePopup(popupTypeProfile);
+})
+ 
+addPlaceForm.addEventListener('submit', addCard)
 
 document.addEventListener('animationstart', function (e) {
   if (e.animationName === 'fade-in') {
