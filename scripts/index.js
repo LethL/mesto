@@ -18,7 +18,6 @@ const addPlaceForm = document.querySelector('#add-place-form');
 const placeNameInput = document.querySelector('#name-input');
 const placeImageInput = document.querySelector('#image-input');
 const cardsList = document.querySelector('.elements');
-const popupCardContent = document.querySelector('.popup__card-content');
 const cardImg = document.querySelector('.popup__card-img');
 const cardName = document.querySelector('.popup__card-name');
 const escKey = 27;
@@ -133,10 +132,16 @@ addProfileForm.addEventListener('submit', e => {
     closePopup(popupTypeProfile);
 })
 
-initialCards.forEach((item) => {
-  const card = new Card(item, '#template');
-  const cardElement = card.generateCard();
+function handleOpenPopup(name, link) {
+  cardImg.src = link;
+  cardImg.alt = name;
+  cardName.textContent = name;
+  openPopup(popupViewImage)
+}
 
+initialCards.forEach((item) => {
+  const card = new Card(item, '#template', handleOpenPopup);
+  const cardElement = card.generateCard();
   cardsList.append(cardElement);
 });
 
@@ -144,7 +149,7 @@ function addCard(event) {
   event.preventDefault()
   const link = placeImageInput.value
   const name = placeNameInput.value
-  const newCard = new Card({name, link}, '#template');
+  const newCard = new Card({name, link}, '#template', handleOpenPopup);
   const cardElement = newCard.generateCard();
   cardsList.prepend(cardElement);
   closePopup(popupAddCard)
