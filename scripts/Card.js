@@ -1,9 +1,9 @@
 export class Card {
-    constructor(data, cardSelector, handleOpenPopup) {
+    constructor(data, cardSelector, handleImageClick) {
         this._link = data.link;
         this._name = data.name;
         this._cardSelector = cardSelector;
-        this._handleOpenPopup = handleOpenPopup;
+        this._handleImageClick = handleImageClick;
     }
 
     _getTemplate() {
@@ -17,30 +17,35 @@ export class Card {
 
     generateCard() {
         this._element = this._getTemplate(); 
-        this._setEventListeners();
+        
+        this._elementImage = this._element.querySelector('.element__image');
+        this._elementLike = this._element.querySelector('.element__like');
+        this._elementDelete = this._element.querySelector('.element__delete');
 
         this._element.querySelector('.element__info').querySelector('.element__title').textContent = this._name;
-        this._element.querySelector('.element__image').src = this._link;
-        this._element.querySelector('.element__image').alt = this._name;
-      
+        this._elementImage.src = this._link;
+        this._elementImage.alt = this._name;
+
+        this._setEventListeners();
+
         return this._element;
     } 
 
     _setEventListeners() {
-        this._element.querySelector('.element__like').addEventListener('click', () => {
+        this._elementLike.addEventListener('click', () => {
             this._toggleLike();
         });
-        this._element.querySelector('.element__delete').addEventListener('click', () => {
+        this._elementDelete.addEventListener('click', () => {
             this._deleteCard();
         });
 
-        this._element.querySelector('.element__image').addEventListener("click", () => {
-            this._handleOpenPopup(this._name, this._link);
+        this._elementImage.addEventListener("click", () => {
+            this._handleImageClick(this._name, this._link);
         });
     }
 
     _toggleLike() {
-        this._element.querySelector('.element__like').classList.toggle('like_active');
+        this._elementLike.classList.toggle('like_active');
     }
 
     _deleteCard() {

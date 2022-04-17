@@ -1,27 +1,18 @@
-@keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
 .popup {
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    display: flex;
+    align-items: center;
+    align-content: center; 
+    justify-content: center;
     background: rgba(0,0,0,0.5);
     justify-content: center;
     align-items: center;
     z-index: 100;
+    visibility: hidden;
     opacity: 0;
-    display: none;
-}
-
-.popup-fade-in {
-  display: flex;
-  animation: fade-out .5s;
+    transition: .2s;
 }
