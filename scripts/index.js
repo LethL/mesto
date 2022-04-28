@@ -1,5 +1,6 @@
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
+import Section from './Section.js';
 
 const editProfileBtn = document.querySelector('.profile__edit-button');
 const addPlaceBtn = document.querySelector('.profile__add-button');
@@ -142,10 +143,16 @@ function createCard(item) {
   return cardElement;
 }
 
-initialCards.forEach((item) => {
-  const cardElement = createCard(item);
-  cardsList.append(cardElement);
-});
+const cardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = createCard(item);
+    cardList.addItem(card);
+  },
+}, '.elements'
+); 
+cardList.renderItems();
+
 
 function addCard(event) {
   event.preventDefault();
