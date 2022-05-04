@@ -1,12 +1,14 @@
-import {Card} from './Card.js';
-import {FormValidator} from './FormValidator.js';
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 import Section from './Section.js';
+import Popup from './Popup.js';
+import PopupWithImage from './PopupWithImage.js';
 
 const editProfileBtn = document.querySelector('.profile__edit-button');
 const addPlaceBtn = document.querySelector('.profile__add-button');
 const popupTypeProfile = document.querySelector('.popup_type_profile');
 const popupAddCard = document.querySelector('.popup_add_card');
-const popupViewImage = document.querySelector('.popup_view_image');
+const popupViewImage = new PopupWithImage('.popup_view_image');
 const popups = document.querySelectorAll('.popup');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
@@ -60,16 +62,16 @@ function closePopup(popup) {
     document.removeEventListener('keydown', handleEscUp)
 }
 
-popups.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_opened')) {
-          closePopup(popup)
-      }
-      if (evt.target.classList.contains('popup__close-image')) {
-        closePopup(popup)
-      }
-  })
-})
+// popups.forEach((popup) => {
+//   popup.addEventListener('mousedown', (evt) => {
+//       if (evt.target.classList.contains('popup_opened')) {
+//           closePopup(popup)
+//       }
+//       if (evt.target.classList.contains('popup__close-image')) {
+//         closePopup(popup)
+//       }
+//   })
+// })
 
 function handleEscUp(evt) {
   if (evt.keyCode === escKey) {
@@ -120,7 +122,10 @@ function editProfileText() {
   profileSubtitle.textContent = profileSubtitleInput.value;
 }
 
-editProfileBtn.addEventListener('click', openEditProfilePopup)
+// editProfileBtn.addEventListener('click', openEditProfilePopup)
+editProfileBtn.addEventListener('click', () => {
+  new Popup('.popup_type_profile').open()
+})
 
 addPlaceBtn.addEventListener('click', openAddPlacePopup)
 
@@ -130,15 +135,10 @@ addProfileForm.addEventListener('submit', e => {
     closePopup(popupTypeProfile);
 })
 
-function handleImageClick(name, link) {
-  cardImg.src = link;
-  cardImg.alt = name;
-  cardName.textContent = name;
-  openPopup(popupViewImage)
-}
-
 function createCard(item) {
-  const card = new Card(item, '#template', handleImageClick);
+  const card = new Card(item, '#template', {handleImageClick: (link, name) => {
+    popupViewImage.open(link, name);
+  }});
   const cardElement = card.generateCard();
   return cardElement;
 }
