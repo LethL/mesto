@@ -26,8 +26,6 @@ export default class PopupWithForm extends Popup {
 
     close() {
         super.close()
-        if (this._formElement.classList.contains('popup__form-place')) {
-            this._formElement.reset()
-        }
+        this._formElement.reset()
     }
 }
