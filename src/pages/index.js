@@ -5,9 +5,9 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api';
 
 import {
-  initialCards,
   config,
   editProfileBtn,
   addPlaceBtn,
@@ -58,17 +58,6 @@ function createCard(data) {
   return card;
 }
 
-const cardList = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const card = createCard(item);
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
-  },
-}, '.elements'
-);
-cardList.renderItems();
-
 const addPlacePopup = new PopupWithForm('.popup_add_card', (data) => {
   const card = createCard(data);
   const cardElement = card.generateCard();
@@ -81,3 +70,25 @@ addPlaceBtn.addEventListener('click', () => {
 addPlacePopup.open()
 formValidators['add-place'].resetValidation()
 })
+
+const api = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-41/cards',
+  headers: {
+    authorization: '34ba8aa0-fdc8-4f70-8c18-1ea7527a281e'
+  }
+})
+
+const initialCards = api.getInitialCards()
+initialCards.then((data) => {
+  const cardList = new Section({
+    items: data,
+    renderer: (item) => {
+      const card = createCard(item);
+      const cardElement = card.generateCard();
+      cardList.addItem(cardElement);
+    },
+  }, '.elements'
+  );
+  cardList.renderItems();
+})
+.catch(err => console.log(err));
