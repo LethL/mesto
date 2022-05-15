@@ -28,4 +28,17 @@ export default class Api {
             return this._responseHandler(res)
         })
     }
+
+    editUserInfo(data) {
+        return fetch(`${this._url}/users/me`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                name: data.name,
+                about: data.about
+            })
+        }).then((res) => {
+            return this._responseHandler(res)
+        })
+    }
 }

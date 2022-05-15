@@ -114,4 +114,21 @@ const getUserInfo = api.getUserInfo()
 getUserInfo.then((data) => {
   userProfile.setUserInfo(data)
 })
-.catch(err => console.log(err));
+
+const userProfilePopup = new PopupWithForm('.popup_type_profile', (data) => {
+  api.editUserInfo(data)
+  .then((value) => {
+    userProfile.setUserInfo(value);
+    userProfilePopup.close()
+  })
+  .catch((err) => console.log(err))
+});
+userProfilePopup.setEventListeners();
+
+editProfileBtn.addEventListener('click', () => {
+  const data = userProfile.getUserInfo()
+  profileTitleInput.value = data.name
+  profileSubtitleInput.value = data.about
+  userProfilePopup.open()
+  formValidators['edit-profile'].resetValidation()
+})
