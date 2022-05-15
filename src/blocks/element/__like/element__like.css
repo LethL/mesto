@@ -5,8 +5,12 @@
     background-position: center;
     background-repeat: no-repeat;
     width: 22px;
+    height: 19px;
     cursor: pointer;
     transition: opacity .1s linear;
+    position: absolute;
+    top: 304px;
+    right: 20px;
 }
 
 .element__like:hover {

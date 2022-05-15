@@ -54,8 +54,8 @@ const viewImagePopup = new PopupWithImage('.popup_view_image');
 viewImagePopup.setEventListeners()
 
 function createCard(data) {
-  const card = new Card({data: data, handleImageClick: (link, name) => {
-    viewImagePopup.open(link, name);
+  const card = new Card({data: data, handleImageClick: (link, name, likes) => {
+    viewImagePopup.open(link, name, likes);
   }}, '#template');
   return card;
 }
