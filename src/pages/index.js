@@ -81,30 +81,18 @@ const api = new Api({
   }
 })
 
-const initialCards = api.getInitialCards()
-initialCards.then((data) => {
-  const cardList = new Section({
-    items: data,
-    renderer: (item) => {
-      const card = createCard(item);
-      const cardElement = card.generateCard();
-      cardList.addItem(cardElement);
-    },
-  }, '.elements'
-  );
-  cardList.renderItems();
-
-  const addPlacePopup = new PopupWithForm('.popup_add_card', (data) => {
-    const card = createCard(data);
+const cardList = new Section({
+  renderer: (item) => {
+    const card = createCard(item);
     const cardElement = card.generateCard();
     cardList.addItem(cardElement);
-    addPlacePopup.close()
-  })
-  addPlacePopup.setEventListeners();
-  addPlaceBtn.addEventListener('click', () => {
-    addPlacePopup.open()
-    formValidators['add-place'].resetValidation()
-  })
+  },
+}, '.elements'
+);
+
+const initialCards = api.getInitialCards()
+initialCards.then((data) => {
+  cardList.renderItems(data)
 })
 .catch(err => console.log(err));
 
@@ -131,4 +119,22 @@ editProfileBtn.addEventListener('click', () => {
   profileSubtitleInput.value = data.about
   userProfilePopup.open()
   formValidators['edit-profile'].resetValidation()
+})
+
+const addPlacePopup = new PopupWithForm('.popup_add_card', (data) => {
+  api.addCard(data)
+  .then((value) => {
+    const card = createCard(value);
+    const cardElement = card.generateCard();
+    cardList.addItem(cardElement);
+    addPlacePopup.close()
+  })
+  .catch((err) => console.log(err))
+})
+
+addPlacePopup.setEventListeners();
+
+addPlaceBtn.addEventListener('click', () => {
+  addPlacePopup.open()
+  formValidators['add-place'].resetValidation()
 })
