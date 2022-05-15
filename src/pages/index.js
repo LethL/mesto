@@ -16,7 +16,9 @@ import {
   profileTitleInput,
   profileSubtitleInput,
   cardsList,
+  profileAvatar,
 } from "../utils/constants.js";
+// import { data } from 'autoprefixer';
 
 const formValidators = {};
 function enableValidation(config) {
@@ -31,21 +33,21 @@ function enableValidation(config) {
 };
 enableValidation(config);
 
-const userProfile = new UserInfo(profileTitle, profileSubtitle);
+// const userProfile = new UserInfo(profileTitle, profileSubtitle);
 
-const userProfilePopup = new PopupWithForm('.popup_type_profile', (data) => {
-  userProfile.setUserInfo(data);
-  userProfilePopup.close()
-});
-userProfilePopup.setEventListeners();
+// const userProfilePopup = new PopupWithForm('.popup_type_profile', (data) => {
+//   userProfile.setUserInfo(data);
+//   userProfilePopup.close()
+// });
+// userProfilePopup.setEventListeners();
 
-editProfileBtn.addEventListener('click', () => {
-  const userData = userProfile.getUserInfo()
-  profileTitleInput.value = userData.name
-  profileSubtitleInput.value = userData.info
-  userProfilePopup.open()
-  formValidators['edit-profile'].resetValidation()
-})
+// editProfileBtn.addEventListener('click', () => {
+//   const userData = userProfile.getUserInfo()
+//   profileTitleInput.value = userData.name
+//   profileSubtitleInput.value = userData.info
+//   userProfilePopup.open()
+//   formValidators['edit-profile'].resetValidation()
+// })
 
 
 const viewImagePopup = new PopupWithImage('.popup_view_image');
@@ -58,23 +60,24 @@ function createCard(data) {
   return card;
 }
 
-const addPlacePopup = new PopupWithForm('.popup_add_card', (data) => {
-  const card = createCard(data);
-  const cardElement = card.generateCard();
-  cardList.addItem(cardElement);
-  addPlacePopup.close()
-})
-addPlacePopup.setEventListeners();
+// const addPlacePopup = new PopupWithForm('.popup_add_card', (data) => {
+//   const card = createCard(data);
+//   const cardElement = card.generateCard();
+//   cardList.addItem(cardElement);
+//   addPlacePopup.close()
+// })
+// addPlacePopup.setEventListeners();
 
-addPlaceBtn.addEventListener('click', () => {
-addPlacePopup.open()
-formValidators['add-place'].resetValidation()
-})
+// addPlaceBtn.addEventListener('click', () => {
+// addPlacePopup.open()
+// formValidators['add-place'].resetValidation()
+// })
 
 const api = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-41/cards',
+  url: 'https://mesto.nomoreparties.co/v1/cohort-41',
   headers: {
-    authorization: '34ba8aa0-fdc8-4f70-8c18-1ea7527a281e'
+    authorization: '34ba8aa0-fdc8-4f70-8c18-1ea7527a281e',
+    'Content-Type': 'application/json'
   }
 })
 
@@ -90,5 +93,25 @@ initialCards.then((data) => {
   }, '.elements'
   );
   cardList.renderItems();
+
+  const addPlacePopup = new PopupWithForm('.popup_add_card', (data) => {
+    const card = createCard(data);
+    const cardElement = card.generateCard();
+    cardList.addItem(cardElement);
+    addPlacePopup.close()
+  })
+  addPlacePopup.setEventListeners();
+  addPlaceBtn.addEventListener('click', () => {
+    addPlacePopup.open()
+    formValidators['add-place'].resetValidation()
+  })
+})
+.catch(err => console.log(err));
+
+const userProfile = new UserInfo(profileTitle, profileSubtitle, profileAvatar);
+
+const getUserInfo = api.getUserInfo()
+getUserInfo.then((data) => {
+  userProfile.setUserInfo(data)
 })
 .catch(err => console.log(err));
