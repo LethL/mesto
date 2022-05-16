@@ -48,6 +48,17 @@
                 </div>
             </div>
         </div>
+        <div class="popup popup_delete_card">
+            <div class="popup__container">
+                <button type="button" id="close-image" class="popup__close-btn"><img class="popup__close-image" src="<%=require('./images/close.svg')%>" alt="закрыть"></button>
+                <div class="popup__card-content">
+                    <form novalidate name="delete-card" class="popup__form popup__delete-card" action="send">
+                        <h2 class="popup__form-title">Вы уверены?</h2>
+                        <button type="submit" class="popup__form-btn">Да</button>
+                    </form>
+                </div>
+            </div>
+        </div>
         <section class="profile">
             <img class="profile__avatar" src="<%=require('./images/image.jpg')%>" alt="аватар">
             <div class="profile__info">
