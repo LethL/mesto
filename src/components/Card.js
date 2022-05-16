@@ -3,6 +3,8 @@ export default class Card {
         this._link = data.link;
         this._name = data.name;
         this._likes = data.likes;
+        this._id = data.owner._id;
+        this._userId = 'ff7d1dd1e4b8348a3ef22f47';
         this._cardSelector = cardSelector;
         this._handleImageClick = handleImageClick;
         this._deleteHandler = deleteHandler;
@@ -29,6 +31,9 @@ export default class Card {
         this._elementImage.src = this._link;
         this._elementImage.alt = this._name;
         this._elementLikeCount.textContent = this._likes.length;
+        if (this._id !== this._userId) {
+            this._elementDelete.remove();
+        }
 
         this._setEventListeners();
 

@@ -40,7 +40,8 @@ function createCard(data) {
   const card = new Card({data: data, handleImageClick: (link, name, likes) => {
     viewImagePopup.open(link, name, likes);
   }, deleteHandler: (() => {
-    document.querySelector('.popup_delete_card').classList.add('popup_opened');
+    console.log(data.owner._id);
+    // document.querySelector('.popup_delete_card').classList.add('popup_opened');
   })}, '#template');
   return card;
 }
@@ -64,7 +65,7 @@ const cardList = new Section({
 
 const initialCards = api.getInitialCards()
 initialCards.then((data) => {
-  cardList.renderItems(data)
+  cardList.renderItems(data);
 })
 .catch(err => console.log(err));
 
