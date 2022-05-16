@@ -4,6 +4,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithConfirm from '../components/PopupWithConfirm';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api';
 
@@ -33,19 +34,6 @@ function enableValidation(config) {
 };
 enableValidation(config);
 
-const viewImagePopup = new PopupWithImage('.popup_view_image');
-viewImagePopup.setEventListeners()
-
-function createCard(data) {
-  const card = new Card({data: data, handleImageClick: (link, name, likes) => {
-    viewImagePopup.open(link, name, likes);
-  }, deleteHandler: (() => {
-    console.log(data.owner._id);
-    // document.querySelector('.popup_delete_card').classList.add('popup_opened');
-  })}, '#template');
-  return card;
-}
-
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-41',
   headers: {
@@ -53,6 +41,28 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 })
+
+const viewImagePopup = new PopupWithImage('.popup_view_image');
+viewImagePopup.setEventListeners()
+
+const deleteCardPopup = new PopupWithConfirm('.popup_delete_card');
+deleteCardPopup.setEventListeners()
+
+function createCard(data) {
+  const card = new Card({data: data, handleImageClick: (link, name, likes) => {
+    viewImagePopup.open(link, name, likes);
+  }, deleteHandler: (() => {
+    deleteCardPopup.open()
+    deleteCardPopup.actionHandler(() => {
+      api.deleteCard(data._id)
+      .then(() => {
+        card.deleteCard();
+        deleteCardPopup.close();
+      })
+    })
+  })}, '#template');
+  return card;
+}
 
 const cardList = new Section({
   renderer: (item) => {
