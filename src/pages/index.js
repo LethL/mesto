@@ -59,7 +59,20 @@ function createCard(data) {
         card.deleteCard();
         deleteCardPopup.close();
       })
+      .catch((err) => console.log(err))
     })
+  }), likeHandler: (() => {
+    api.likeCard(data._id)
+    .then(() => {
+      card.likeCard();
+    })
+    .catch((err) => console.log(err))
+  }), dislikeHandler: (() => {
+    api.dislikeCard(data._id)
+    .then(() => {
+      card.dislikeCard();
+    })
+    .catch((err) => console.log(err))
   })}, '#template');
   return card;
 }
