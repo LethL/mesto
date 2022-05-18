@@ -16,8 +16,8 @@ import {
   profileSubtitle,
   profileTitleInput,
   profileSubtitleInput,
-  cardsList,
   profileAvatar,
+  profileAvatarEdit
 } from "../utils/constants.js";
 // import { data } from 'autoprefixer';
 
@@ -133,4 +133,12 @@ addPlacePopup.setEventListeners();
 addPlaceBtn.addEventListener('click', () => {
   addPlacePopup.open()
   formValidators['add-place'].resetValidation()
+})
+
+
+const editAvatar = new PopupWithForm('.popup_edit-avatar');
+editAvatar.setEventListeners()
+
+profileAvatarEdit.addEventListener('click', (evt) => {
+  editAvatar.open()
 })
