@@ -136,9 +136,16 @@ addPlaceBtn.addEventListener('click', () => {
 })
 
 
-const editAvatar = new PopupWithForm('.popup_edit-avatar');
-editAvatar.setEventListeners()
+const editAvatarPopup = new PopupWithForm('.popup_edit-avatar', (data) => { 
+  api.editAvatar(data)
+  .then((avatar) => {
+    userProfile.setUserAvatar(avatar) 
+    editAvatarPopup.close()
+  })
+  .catch((err) => console.log(err))
+});
+editAvatarPopup.setEventListeners()
 
-profileAvatarEdit.addEventListener('click', (evt) => {
-  editAvatar.open()
+profileAvatarEdit.addEventListener('click', () => {
+  editAvatarPopup.open()
 })
