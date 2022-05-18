@@ -5,6 +5,7 @@ export default class Popup {
         this._popup = document.querySelector(containerSelector)
         this._handleEscClose = this._handleEscClose.bind(this);
         this._closeBtn = this._popup.querySelector('.popup__close-image');
+        this._formSubmitBtn = this._popup.querySelector('.popup__form-btn');
     }
 
     _handleEscClose(evt) {
@@ -29,5 +30,13 @@ export default class Popup {
                 this.close()
             }
         })
+    }
+
+    loadingHandler(isLoad) {
+        if (isLoad) {
+            this._formSubmitBtn.textContent = 'Сохранение...';
+        } if (!isLoad) {
+            this._formSubmitBtn.textContent = this._formSubmitBtnText;
+        }
     }
 }

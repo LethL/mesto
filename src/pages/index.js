@@ -100,12 +100,14 @@ getUserInfo.then((data) => {
 })
 
 const userProfilePopup = new PopupWithForm('.popup_type_profile', (data) => {
+  userProfilePopup.loadingHandler(true)
   api.editUserInfo(data)
   .then((value) => {
     userProfile.setUserInfo(value);
     userProfilePopup.close()
   })
   .catch((err) => console.log(err))
+  .finally(() => userProfilePopup.loadingHandler(false))
 });
 userProfilePopup.setEventListeners();
 
@@ -118,6 +120,7 @@ editProfileBtn.addEventListener('click', () => {
 })
 
 const addPlacePopup = new PopupWithForm('.popup_add_card', (data) => {
+  addPlacePopup.loadingHandler(true)
   api.addCard(data)
   .then((value) => {
     const card = createCard(value);
@@ -126,6 +129,7 @@ const addPlacePopup = new PopupWithForm('.popup_add_card', (data) => {
     addPlacePopup.close()
   })
   .catch((err) => console.log(err))
+  .finally(() => addPlacePopup.loadingHandler(false))
 })
 
 addPlacePopup.setEventListeners();
@@ -137,12 +141,14 @@ addPlaceBtn.addEventListener('click', () => {
 
 
 const editAvatarPopup = new PopupWithForm('.popup_edit-avatar', (data) => { 
+  editAvatarPopup.loadingHandler(true)
   api.editAvatar(data)
   .then((avatar) => {
     userProfile.setUserAvatar(avatar) 
     editAvatarPopup.close()
   })
   .catch((err) => console.log(err))
+  .finally(() => editAvatarPopup.loadingHandler(false))
 });
 editAvatarPopup.setEventListeners()
 
