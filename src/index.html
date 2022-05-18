@@ -28,7 +28,7 @@
         </div>
         <div class="popup popup_add_card">
             <div class="popup__container">
-                <button type="button" id="close-card" class="popup__close-btn"><img class="popup__close-image" src="<%=require('./images/close.svg')%>" alt="закрыть"></button>
+                <button type="button" class="popup__close-btn"><img class="popup__close-image" src="<%=require('./images/close.svg')%>" alt="закрыть"></button>
                 <form novalidate id="add-place-form" name="add-place" class="popup__form popup__form-place" action="send">
                     <h2 class="popup__form-title">Новое место</h2>
                     <input name="name" minlength="2" maxlength="30" required placeholder="Название" id="name-input" class="popup__form-input" type="text">
@@ -41,7 +41,7 @@
         </div>
         <div class="popup popup_view_image">
             <div class="popup__container">
-                <button type="button" id="close-image" class="popup__close-btn"><img class="popup__close-image" src="<%=require('./images/close.svg')%>" alt="закрыть"></button>
+                <button type="button" class="popup__close-btn"><img class="popup__close-image" src="<%=require('./images/close.svg')%>" alt="закрыть"></button>
                 <div class="popup__card-content">
                     <img class="popup__card-img" src="/" alt="картинка">
                     <p class="popup__card-name"></p>
@@ -50,7 +50,7 @@
         </div>
         <div class="popup popup_delete_card">
             <div class="popup__container">
-                <button type="button" id="close-image" class="popup__close-btn"><img class="popup__close-image" src="<%=require('./images/close.svg')%>" alt="закрыть"></button>
+                <button type="button" class="popup__close-btn"><img class="popup__close-image" src="<%=require('./images/close.svg')%>" alt="закрыть"></button>
                 <div class="popup__card-content">
                     <form novalidate name="delete-card" class="popup__form popup__delete-card" action="send">
                         <h2 class="popup__form-title">Вы уверены?</h2>
@@ -61,10 +61,10 @@
         </div>
         <div class="popup popup_edit-avatar">
             <div class="popup__container">
-                <button type="button" id="close-card" class="popup__close-btn"><img class="popup__close-image" src="<%=require('./images/close.svg')%>" alt="закрыть"></button>
+                <button type="button" class="popup__close-btn"><img class="popup__close-image" src="<%=require('./images/close.svg')%>" alt="закрыть"></button>
                 <form novalidate name="edit-avatar" class="popup__form popup__form-avatar" action="send">
                     <h2 class="popup__form-title">Обновить аватар</h2>
-                    <input name="link" required placeholder="Ссылка на картинку" id="image-input" class="popup__form-input" type="url">
+                    <input name="link" required placeholder="Ссылка на картинку" class="popup__form-input" type="url">
                     <span class="popup__form-input-error image-input-error"></span>
                     <button type="submit" class="popup__form-btn">Сохранить</button>
                 </form>
