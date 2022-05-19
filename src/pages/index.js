@@ -17,9 +17,9 @@ import {
   profileTitleInput,
   profileSubtitleInput,
   profileAvatar,
-  profileAvatarEdit
+  profileAvatarEdit,
 } from "../utils/constants.js";
-// import { data } from 'autoprefixer';
+export let userId = '';
 
 const formValidators = {};
 function enableValidation(config) {
@@ -73,31 +73,19 @@ function createCard(data) {
       card.dislikeCard();
     })
     .catch((err) => console.log(err))
-  })}, '#template');
-  return card;
+  })}, '#template', userId);
+  return card.generateCard();
 }
 
 const cardList = new Section({
   renderer: (item) => {
     const card = createCard(item);
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
+    cardList.addItem(card);
   },
 }, '.elements'
 );
 
-const initialCards = api.getInitialCards()
-initialCards.then((data) => {
-  cardList.renderItems(data);
-})
-.catch(err => console.log(err));
-
 const userProfile = new UserInfo(profileTitle, profileSubtitle, profileAvatar);
-
-const getUserInfo = api.getUserInfo()
-getUserInfo.then((data) => {
-  userProfile.setUserInfo(data)
-})
 
 const userProfilePopup = new PopupWithForm('.popup_type_profile', (data) => {
   userProfilePopup.loadingHandler(true)
@@ -124,8 +112,7 @@ const addPlacePopup = new PopupWithForm('.popup_add_card', (data) => {
   api.addCard(data)
   .then((value) => {
     const card = createCard(value);
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
+    cardList.addItem(card);
     addPlacePopup.close()
   })
   .catch((err) => console.log(err))
@@ -155,3 +142,12 @@ editAvatarPopup.setEventListeners()
 profileAvatarEdit.addEventListener('click', () => {
   editAvatarPopup.open()
 })
+
+Promise.all( [api.getUserInfo(), api.getInitialCards()] )
+.then((data) => {
+  userProfile.setUserInfo(data[0])
+  userId = data[0]._id;
+
+  cardList.renderItems(data[1]);
+})
+.catch((err) => console.log(err))
